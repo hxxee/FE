@@ -4,7 +4,7 @@ export const Container = styled.div`
   position: relative;
   margin: 0 auto;
   margin-top: 0px;
-  min-height: 100dvh;
+  height: 100dvh;
   padding: 0; /* 불필요한 패딩 제거 */
   box-sizing: border-box; /* 패딩이 width에 포함되도록 설정 */
   display: flex;
@@ -12,8 +12,9 @@ export const Container = styled.div`
   background: #fff0c7;
   width: 100%;
   max-width: 402px;
+  min-width: 350px; /* 최소 너비 설정 -수연 추가 */
   flex-shrink: 0;
-  padding-bottom: 30px;
+  overflow: hidden;
 `;
 
 export const Header = styled.div`
@@ -40,6 +41,7 @@ export const Profile = styled.div`
 `;
 
 export const Img = styled.div`
+  position: relative;
   width: 58px;
   height: 58px;
   background: #ffe49a;
@@ -47,11 +49,20 @@ export const Img = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
+  cursor: pointer;
 
-  img {
+  img#person {
     width: 29.305px;
     height: 29.305px;
   }
+`;
+
+export const EditIcon = styled.img`
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 20px;
+  height: 20px;
 `;
 
 export const Name = styled.div`
@@ -62,6 +73,7 @@ export const Name = styled.div`
   font-weight: 500;
   line-height: normal;
   letter-spacing: -0.3px;
+  cursor: pointer;
 `;
 
 export const Chat = styled.div`
@@ -142,48 +154,155 @@ export const LBtn = styled.button`
 `;
 
 export const Body = styled.div`
-  padding-top: 202px;
-`;
-
-export const Nav = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding: 6px;
-  justify-content: space-between;
-  align-items: center;
-  width: 216px;
-  height: 65px;
-  z-index: 1000;
   position: fixed;
-  bottom: 30px;
+  top: 202px;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 40px;
-  background: #fff;
-  box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 402px;
+  padding-bottom: 125px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+`;
+export const List = styled.div`
+display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 13px 25px;
+  flex: 0 0 auto;
 `;
 
-export const Select = styled.div`
-  width: 95px;
-  height: 53px;
-  border-radius: 40px;
-  background: #ffe49a;
+export const Component = styled.div`
+width: 343px;
+  height: 126px;
+  border-radius: 10px;
+  border: 1px solid #ffe49a;
+  background: #fffcf4;
+  padding: 22px 18px 20px 12px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
+  gap: 13px;
+`;
+export const ProfileImg = styled.div`
+ width: 35px;
+  height: 35px;
+  background: #d9d9d9;
+  border-radius: 50%;
 `;
 
-export const NSelect = styled.div`
-  width: 95px;
-  height: 53px;
-  border-radius: 40px;
-  background: #fff;
+export const Content = styled.div`
+width: 265px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
 `;
+export const Text = styled.div`
+gap: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+`;
+export const Up = styled.div`
+display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+
+  #title {
+    color: #21272a;
+    font-family: Pretendard;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%; /* 16.5px */
+  }
+
+  #members {
+    color: #21272a;
+    font-family: Pretendard;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%; /* 16.5px */
+  }
+
+  #status {
+    flex: 0 0 auto;
+    padding: 3px 8px;
+    border-radius: 10px;
+    background: #ffe49a;
+    color: #000;
+    font-family: Pretendard;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%;
+  }
+`;
+export const Down = styled.div`
+  color: #697077;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 16.8px */
+`;
+export const ButtonLeft = styled.div`
+  display: flex;
+  width: 50%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #fff0c7;
+  border: 1px solid #FFE49A;
+  color: #000;
+`;
+export const ButtonRight = styled.div`
+  display: flex;
+  width: 50%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid #FFE49A;
+  color: #000;
+  cursor: pointer;
+`;
+export const Button = styled.div`width: 265px;
+width: 265px;
+  height: 33px;
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 16.8px */
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;`;
 
 export const NBtn = styled.div`
   width: 34px;
   height: 34px;
+`;
+
+export const Message = styled.p`
+  width: 343px;
+  color: #d93025;
+  margin: 0;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.28px;
 `;

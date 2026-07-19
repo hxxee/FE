@@ -4,7 +4,7 @@ export const Container = styled.div`
   position: relative;
   margin: 0 auto;
   margin-top: 0px;
-  min-height: 100dvh;
+  height: 100dvh;
   padding: 0; /* 불필요한 패딩 제거 */
   box-sizing: border-box; /* 패딩이 width에 포함되도록 설정 */
   display: flex;
@@ -13,7 +13,7 @@ export const Container = styled.div`
   width: 100%;
   max-width: 402px;
   flex-shrink: 0;
-  padding-bottom: 30px;
+  overflow: hidden;
 `;
 
 export const Header = styled.div`
@@ -82,21 +82,33 @@ export const Category = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 393px;
-  height: 65px;
+  min-height: 65px;
+  max-height: ${({ $expanded }) => ($expanded ? "144px" : "65px")};
   padding: 18px 25px;
   z-index: 999;
+  box-sizing: border-box;
+  background: #fff0c7;
+  overflow: hidden;
+  transition: max-height 0.2s ease;
 `;
 
 export const CList = styled.div`
   display: flex;
   flex-direction: row;
+  flex-wrap: ${({ $expanded }) => ($expanded ? "wrap" : "nowrap")};
   gap: 10px;
-  width: 100%;
+  width: calc(100% - 34px);
   align-items: center;
+  white-space: nowrap;
+  overflow: ${({ $expanded }) => ($expanded ? "auto" : "hidden")};
+  max-height: ${({ $expanded }) => ($expanded ? "108px" : "29px")};
+  padding-right: 2px;
+  box-sizing: border-box;
 `;
 
 export const LBtn = styled.button`
   display: flex;
+  flex: 0 0 auto;
   height: 28px;
   padding: 10px;
   justify-content: center;
@@ -121,14 +133,52 @@ export const LBtn = styled.button`
 export const Plus = styled.div`
   width: 24px;
   height: 24px;
+  flex: 0 0 auto;
+`;
+
+export const CategoryToggle = styled.button`
+  position: absolute;
+  top: 18px;
+  right: 25px;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 10px;
+  background: #fffcf4;
+  color: #000;
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: ${({ $expanded }) => ($expanded ? "rotate(0deg)" : "rotate(180deg)")};
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &:active {
+    background: #ffe49a;
+  }
 `;
 
 export const Body = styled.div`
-  padding-top: 202px;
+  position: fixed;
+  top: ${({ $categoryExpanded }) => ($categoryExpanded ? "281px" : "202px")};
+  bottom: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 402px;
+  padding-bottom: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  transition: top 0.2s ease;
 `;
 
 export const List = styled.div`
@@ -136,6 +186,7 @@ export const List = styled.div`
   flex-direction: column;
   gap: 15px;
   padding: 13px 25px;
+  flex: 0 0 auto;
 `;
 
 export const Component = styled.div`
@@ -222,17 +273,34 @@ export const Button = styled.div`
   justify-content: center;
 `;
 
+export const Message = styled.p`
+  width: 343px;
+  color: #d93025;
+  margin: 0;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.28px;
+`;
+
 export const Make = styled.div`
   width: 343px;
   height: 42px;
+  min-height: 42px;
+  flex: 0 0 42px;
   border-radius: 10px;
   border: 1px solid #ffe49a;
   background: #ffe49a;
   margin-top: 30px;
+  margin-bottom: 4px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+
 
   img {
     width: 15px;
@@ -247,44 +315,6 @@ export const Make = styled.div`
     font-weight: 500;
     line-height: 140%; /* 21px */
   }
-`;
-
-export const Nav = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding: 6px;
-  justify-content: space-between;
-  align-items: center;
-  width: 216px;
-  height: 65px;
-  z-index: 1000;
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 40px;
-  background: #fff;
-  box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
-`;
-
-export const Select = styled.div`
-  width: 95px;
-  height: 53px;
-  border-radius: 40px;
-  background: #ffe49a;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-export const NSelect = styled.div`
-  width: 95px;
-  height: 53px;
-  border-radius: 40px;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export const NBtn = styled.div`
