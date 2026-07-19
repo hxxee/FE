@@ -167,3 +167,166 @@ export const NBtn = styled.div`
   width: 34px;
   height: 34px;
 `;
+
+export const Body = styled.div`
+padding-top: 172px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  gap:20px;
+    p{
+    color: #000;
+    margin-bottom: 9px;
+font-family: Pretendard;
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.3px;
+}
+
+`;
+export const GameSelect = styled.div`
+display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+select{
+appearance: none;
+-webkit-appearance: none;
+padding:20px 48px 20px 20px;
+width: 343px;
+background: #ffffff;
+background-image: url("/images/chevron-down.svg");
+background-repeat: no-repeat;
+background-position: right 18px center;
+background-size: 16px 16px;
+border: 1px solid #D9D9D9;
+border-radius: 10px;
+color: #A2A2A2;
+font-family: Pretendard;
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.3px;
+}
+
+`;
+export const TitleInput = styled.div`
+display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+input{
+padding:20px;
+width: 343px;
+    border-radius: 10px;
+background: #ffffff;
+border: 1px solid #D9D9D9;
+color: #A2A2A2;
+font-family: Pretendard;
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.3px;
+}
+`;
+export const ContentInput = styled.div`
+display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+textarea{
+  resize: none;
+padding:20px;
+width: 343px;
+height: 118px;
+background: #ffffff;
+border: 1px solid #D9D9D9;
+color: #A2A2A2;
+font-family: Pretendard;
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.3px;
+border-radius: 10px;
+
+}
+}`;
+export const DetailSelect = styled.div`
+display: flex;
+width: 343px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+#SelectBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+select{
+width: 161px;
+appearance: none;
+-webkit-appearance: none;
+padding:20px 42px 20px 20px;
+background: #ffffff;
+background-image: url("/images/chevron-down.svg");
+background-repeat: no-repeat;
+background-position: right 16px center;
+background-size: 16px 16px;
+border: 1px solid #D9D9D9;
+color: #A2A2A2;
+font-family: Pretendard;
+font-size: 15px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.3px;
+    border-radius: 10px;
+
+}
+`;
+export const Button = styled.button`
+width: 343px;
+  height: 55px;
+  border-radius: 10px;
+  border: 1px solid #ffe49a;
+  background: #ffe49a;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+      cursor: pointer;
+color: #000;
+font-family: Pretendard;
+font-size: 17px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.34px;
+
+&:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+`;
+
+export const Message = styled.p`
+  width: 343px;
+  color: #d93025 !important;
+  margin: 0 !important;
+  font-family: Pretendard;
+  font-size: 14px !important;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.28px;
+`;

@@ -1,15 +1,62 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import { getGames } from "../api/GameApi";
+import { getRooms } from "../api/HomeApi";
 import * as H from "../styles/StyledHome";
-// import axios from "axios";
 
 const Home = () => {
   const navigate = useNavigate();
-  const goHome = () => navigate(`/`);
   const goList = () => navigate(`/chat`);
-  const goMyroom = () => navigate(`/my`);
-  const goProf = () => navigate(`/profile`);
-  const [selected, setSelected] = useState("전체");
+  const [selected, setSelected] = useState("all");
+  const [games, setGames] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [message, setMessage] = useState("");
+  const [isCategoryExpanded, setIsCategoryExpanded] = useState(false);
+  const [hasCategoryOverflow, setHasCategoryOverflow] = useState(false);
+  const gameListRef = useRef(null);
+
+  useEffect(() => {
+    const loadGames = async () => {
+      try {
+        const gameList = await getGames();
+        setGames(gameList);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    loadGames();
+  }, []);
+
+  useEffect(() => {
+    const loadRooms = async () => {
+      try {
+        setMessage("");
+        const roomList = await getRooms({ game: selected });
+        setRooms(roomList);
+      } catch (error) {
+        setRooms([]);
+        setMessage(error.message || "방 목록을 불러오는 중 문제가 발생했습니다.");
+      }
+    };
+
+    loadRooms();
+  }, [selected]);
+
+  useEffect(() => {
+    const checkOverflow = () => {
+      if (!gameListRef.current) return;
+
+      const list = gameListRef.current;
+      setHasCategoryOverflow(list.scrollWidth > list.clientWidth);
+    };
+
+    checkOverflow();
+    window.addEventListener("resize", checkOverflow);
+
+    return () => window.removeEventListener("resize", checkOverflow);
+  }, [games]);
 
   return (
     <H.Container>
@@ -26,21 +73,24 @@ const Home = () => {
           </H.NBtn>
         </H.Chat>
       </H.Header>
-      <H.Category>
-        <H.CList>
+      <H.Category $expanded={isCategoryExpanded}>
+        <H.CList ref={gameListRef} $expanded={isCategoryExpanded}>
           <H.LBtn
-            $selected={selected === "전체"}
-            onClick={() => setSelected("전체")}
+            $selected={selected === "all"}
+            onClick={() => setSelected("all")}
           >
             전체
           </H.LBtn>
 
-          <H.LBtn
-            $selected={selected === "발로란트"}
-            onClick={() => setSelected("발로란트")}
-          >
-            발로란트
-          </H.LBtn>
+          {games.map((gameItem) => (
+            <H.LBtn
+              key={gameItem.id}
+              $selected={selected === gameItem.slug}
+              onClick={() => setSelected(gameItem.slug)}
+            >
+              {gameItem.name_ko || gameItem.short_name || gameItem.name}
+            </H.LBtn>
+          ))}
           <H.Plus>
             <img
               id="add"
@@ -49,54 +99,65 @@ const Home = () => {
             />
           </H.Plus>
         </H.CList>
+        {hasCategoryOverflow && (
+          <H.CategoryToggle
+            type="button"
+            $expanded={isCategoryExpanded}
+            aria-label={isCategoryExpanded ? "게임 목록 접기" : "게임 목록 전체보기"}
+            onClick={() => setIsCategoryExpanded((prev) => !prev)}
+          >
+            ^
+          </H.CategoryToggle>
+        )}
       </H.Category>
 
-      <H.Body>
+      <H.Body $categoryExpanded={isCategoryExpanded && hasCategoryOverflow}>
         <H.List>
-          <H.Component>
-            <H.Img></H.Img>
-            <H.Content>
-              <H.Text>
-                <H.Up>
-                  <div id="title">게임 팀원 구해요</div>
-                  <div id="members">2/10</div>
-                </H.Up>
-                <H.Down>방 간단하게 소개 / 시간대 / 마이크</H.Down>
-              </H.Text>
-              <H.Button>신청하기</H.Button>
-            </H.Content>
-          </H.Component>
+          {message && <H.Message>{message}</H.Message>}
+
+          {rooms.map((room) => (
+            <H.Component key={room.id}>
+              <H.Img style={{ background: room.game?.color || "#d9d9d9" }} />
+              <H.Content>
+                <H.Text>
+                  <H.Up>
+                    <div id="title">{room.title}</div>
+                    <div id="members">
+                      {room.approved_member_count}/{room.max_members}
+                    </div>
+                  </H.Up>
+                  <H.Down>
+                    {room.description || "방 소개 없음"} /{" "}
+                    {room.play_time_label || "시간대 미정"} /{" "}
+                    {room.game?.name_ko || room.game?.name}
+                  </H.Down>
+                </H.Text>
+                <H.Button>
+                  {room.my_membership_status === "approved"
+                    ? "참여중"
+                    : "신청하기"}
+                </H.Button>
+              </H.Content>
+            </H.Component>
+          ))}
         </H.List>
-        <H.Make>
+        <H.Make
+          onClick={() =>
+            navigate("/make", {
+              state: { selectedGame: selected === "all" ? "" : selected },
+            })
+          }
+        >
           <img
             id="add"
             src={`${process.env.PUBLIC_URL}/images/add.svg   `}
             alt="add"
           />
-          <div>방 만들기</div>
+          <div >방 만들기</div>
         </H.Make>
       </H.Body>
 
-      <H.Nav>
-        <H.Select>
-          <H.NBtn>
-            <img
-              id="home"
-              src={`${process.env.PUBLIC_URL}/images/home_e.svg   `}
-              alt="home"
-            />
-          </H.NBtn>
-        </H.Select>
-        <H.NSelect>
-          <H.NBtn onClick={goProf}>
-            <img
-              id="prof"
-              src={`${process.env.PUBLIC_URL}/images/prof_e.svg   `}
-              alt="prof"
-            />
-          </H.NBtn>
-        </H.NSelect>
-      </H.Nav>
+      <Navbar />
     </H.Container>
   );
 };

@@ -5,7 +5,7 @@ import * as C from "../styles/StyledChat";
 
 const Chat = () => {
   const navigate = useNavigate();
-  const goHome = () => navigate(`/`);
+  const goHome = () => navigate(`/home`);
   const goList = () => navigate(`/chat`);
   const goMyroom = () => navigate(`/my`);
   const goBack = () => navigate(-1);
