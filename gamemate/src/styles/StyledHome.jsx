@@ -155,8 +155,11 @@ export const CategoryToggle = styled.button`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transform: ${({ $expanded }) => ($expanded ? "rotate(0deg)" : "rotate(180deg)")};
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transform: ${({ $expanded }) =>
+    $expanded ? "rotate(0deg)" : "rotate(180deg)"};
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 
   &:active {
     background: #ffe49a;
@@ -257,7 +260,9 @@ export const Down = styled.div`
   line-height: 140%; /* 16.8px */
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
+  outline: none;
+  border: transparent;
   width: 265px;
   height: 33px;
   border-radius: 10px;
@@ -300,7 +305,6 @@ export const Make = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-
 
   img {
     width: 15px;

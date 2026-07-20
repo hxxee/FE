@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { getGames } from "../api/GameApi";
 import { getRooms } from "../api/HomeApi";
+import { applyToRoom } from "../api/ApplyApi";
 import * as H from "../styles/StyledHome";
 
 const Home = () => {
@@ -15,6 +16,47 @@ const Home = () => {
   const [isCategoryExpanded, setIsCategoryExpanded] = useState(false);
   const [hasCategoryOverflow, setHasCategoryOverflow] = useState(false);
   const gameListRef = useRef(null);
+
+  const [applyingRoomId, setApplyingRoomId] = useState(null);
+
+  const handleApply = async (room) => {
+    if (
+      applyingRoomId === room.id ||
+      room.my_membership_status === "pending" ||
+      room.my_membership_status === "approved" ||
+      room.my_membership_status === "rejected"
+    ) {
+      return;
+    }
+
+    try {
+      setApplyingRoomId(room.id);
+      setMessage("");
+
+      const result = await applyToRoom({
+        roomId: room.id,
+      });
+
+      setRooms((prevRooms) =>
+        prevRooms.map((item) =>
+          item.id === room.id
+            ? {
+                ...item,
+                my_membership_status: result.status || "pending",
+              }
+            : item,
+        ),
+      );
+    } catch (error) {
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "가입 신청 중 문제가 발생했습니다.",
+      );
+    } finally {
+      setApplyingRoomId(null);
+    }
+  };
 
   useEffect(() => {
     const loadGames = async () => {
@@ -37,7 +79,9 @@ const Home = () => {
         setRooms(roomList);
       } catch (error) {
         setRooms([]);
-        setMessage(error.message || "방 목록을 불러오는 중 문제가 발생했습니다.");
+        setMessage(
+          error.message || "방 목록을 불러오는 중 문제가 발생했습니다.",
+        );
       }
     };
 
@@ -103,7 +147,9 @@ const Home = () => {
           <H.CategoryToggle
             type="button"
             $expanded={isCategoryExpanded}
-            aria-label={isCategoryExpanded ? "게임 목록 접기" : "게임 목록 전체보기"}
+            aria-label={
+              isCategoryExpanded ? "게임 목록 접기" : "게임 목록 전체보기"
+            }
             onClick={() => setIsCategoryExpanded((prev) => !prev)}
           >
             ^
@@ -132,10 +178,25 @@ const Home = () => {
                     {room.game?.name_ko || room.game?.name}
                   </H.Down>
                 </H.Text>
-                <H.Button>
-                  {room.my_membership_status === "approved"
-                    ? "참여중"
-                    : "신청하기"}
+                <H.Button
+                  type="button"
+                  onClick={() => handleApply(room)}
+                  disabled={
+                    applyingRoomId === room.id ||
+                    room.my_membership_status === "pending" ||
+                    room.my_membership_status === "approved" ||
+                    room.my_membership_status === "rejected"
+                  }
+                >
+                  {applyingRoomId === room.id
+                    ? "신청 중..."
+                    : room.my_membership_status === "approved"
+                      ? "참여 중"
+                      : room.my_membership_status === "pending"
+                        ? "승인 대기 중"
+                        : room.my_membership_status === "rejected"
+                          ? "신청 거절됨"
+                          : "신청하기"}
                 </H.Button>
               </H.Content>
             </H.Component>
@@ -153,7 +214,7 @@ const Home = () => {
             src={`${process.env.PUBLIC_URL}/images/add.svg   `}
             alt="add"
           />
-          <div >방 만들기</div>
+          <div>방 만들기</div>
         </H.Make>
       </H.Body>
 
