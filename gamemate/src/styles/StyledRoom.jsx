@@ -32,7 +32,7 @@ export const Header = styled.div`
 `;
 
 export const Title = styled.div`
-  gap: 37px;
+  gap: 12px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -43,6 +43,13 @@ export const Title = styled.div`
   }
 `;
 
+export const HeaderLogo = styled.div`
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  flex: 0 0 auto;
+`;
+
 export const CTitle = styled.div`
   display: flex;
   flex-direction: column;
@@ -51,11 +58,11 @@ export const CTitle = styled.div`
   #title {
     color: #000;
     font-family: Pretendard;
-    font-size: 15px;
+    font-size: 24px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.48px;
   }
 
   #members {
@@ -95,7 +102,7 @@ export const Board = styled.div`
   border-radius: 30px;
   background: #fffcf4;
 
-  padding: 21px 20px 60px;
+  padding: 21px 16px 30px;
 
   display: flex;
   flex-direction: column;
@@ -105,10 +112,11 @@ export const Board = styled.div`
 `;
 
 export const ProfileImg = styled.div`
- width: 35px;
-  height: 35px;
+  width: 46px;
+  height: 46px;
   background: #d9d9d9;
   border-radius: 50%;
+  flex: 0 0 auto;
 `;
 
 export const Content = styled.div`
@@ -126,12 +134,12 @@ gap: 6px;
 `;
 export const Rcontent = styled.div`
   width: 100%;
-  margin-top: 28px;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 18px;
+  gap: 34px;
 `;
 
 export const TitleContent = styled.div`
@@ -143,40 +151,45 @@ export const TitleContent = styled.div`
   gap: 15px;
 `;
 export const OptionContent = styled.div`
-  width: 295px;
-  min-height: 36px;
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid #ffe49a;
+  width: 100%;
+  min-height: 38px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  gap: 8px;
+  gap: 14px;
   box-sizing: border-box;
 
   div {
     min-width: 0;
-    color: #21272a;
+    color: #697077;
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 140%;
+    line-height: normal;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  div + div::before {
-    content: "|";
-    margin-right: 8px;
-    color: #c9a947;
+  #tag {
+    flex: 0 0 auto;
+    min-width: 92px;
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 10px;
+    background: #ffe49a;
+    color: #697077;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
   }
 `;
 export const Description = styled.div`
-  width: 295px;
+  width: 100%;
   color: #21272a;
   font-family: Pretendard;
   font-size: 14px;
@@ -186,6 +199,70 @@ export const Description = styled.div`
   text-align: left;
   word-break: keep-all;
   overflow-wrap: anywhere;
+`;
+
+export const MemberBox = styled.div`
+  width: 100%;
+  min-height: 160px;
+  padding: 18px 24px 16px;
+  border: 1px solid #ffe49a;
+  border-radius: 10px;
+  background: #fffcf4;
+  box-sizing: border-box;
+`;
+
+export const MemberTitle = styled.div`
+  color: #21272a;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.32px;
+
+  span {
+    margin-left: 10px;
+  }
+`;
+
+export const MemberList = styled.div`
+  margin-top: 24px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: start;
+`;
+
+export const MemberItem = styled.div`
+  width: 48px;
+  flex: 0 0 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  div {
+    width: 100%;
+    color: #21272a;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 130%;
+    text-align: center;
+    word-break: break-all;
+  }
+`;
+
+export const MemberAvatar = styled.div`
+  width: 48px;
+  height: 48px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: #d9d9d9;
+  box-sizing: border-box;
+  flex: 0 0 48px;
 `;
 export const Up = styled.div`
 display: flex;
